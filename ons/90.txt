@@ -1,0 +1,69 @@
+*define
+
+caption "Million Arthus CN test ver"
+;spi "nscrpng.spi|png"
+nsa
+globalon
+filelog
+labellog
+
+numalias L_BG,120
+numalias L_CHAR_BASE,116
+numalias L_TEXT_BG, 55
+numalias L_TEXT, 50
+numalias L_TEXT_NAME, 48
+numalias L_KSEL, 40
+
+
+numalias SCREEN_WIDTH,640
+numalias SCREEN_HEIGHT,480
+stralias SAVE_HEADER, ":s/13,13,1;#FFFFFF"
+stralias RIGHT_HEADER, ":s/20,20,0;#FFFFFF"
+numalias FONT_SIZE, 20
+numalias LINE_SPACE, 13
+numalias KSEL_POOL, 400
+numalias KSEL_SIZE, 5
+numalias KSEL_COUNT, 94
+
+numalias kflow_label, 998
+numalias right_enabled, 992
+
+stralias TEXT_BG,":a;image\que_adv.png"
+
+usewheel
+useescspc
+humanz L_TEXT
+windowback
+;textgosub *text_cw
+numalias BtnRes,6
+
+deletemenu
+menusetwindow 20,20,2,2,1,0,#cccccc
+menuselectcolor #ffffff,#cfcfef,#aaaaaa
+rmenu "显示图象", windowerase, "回想", lookback,"到下一个选择肢", skip, "ＳＡＶＥ", save, "ＬＯＡＤ", load, "返回标题画面", reset, "结束游戏", end
+
+;セーブの数
+savenumber 20
+
+;セーブの名称
+savename "□■记忆退避■□","■□记忆复原□■","记忆"
+
+
+defsub title
+defsub name
+defsub bg_
+defsub texton_
+defsub textoff_
+defsub trans
+defsub char
+defsub char_on
+defsub voice
+defsub se
+defsub wa
+defsub k_seladd
+defsub k_select
+defsub k_select_lp
+defsub begin_scene
+defsub itoa_s
+
+game

@@ -1,0 +1,60 @@
+*reset_menu
+	gosub *clear_scene
+	vsp L_TEXT_BG, 0
+	stopbgm
+	bg_ "map"
+	return
+
+*start
+
+	mov %right_enabled, 0
+	lsp L_TEXT_BG, TEXT_BG, 0, 390, 196
+	setwindow 15,450,25,3,38,38,0,18,20,1,1,#FFFFFF,0,390,960,250
+	gosub *reset_menu
+	k_seladd "开始剑城篇","1"
+	k_seladd "开始技场篇","2"
+	k_seladd "开始魔派篇","3"
+	k_seladd "读取进度","*load_now"
+	k_seladd "结束游戏","*end_now"
+	k_select
+	if $kflow_label = "" reset
+	if $kflow_label = "*load_now" systemcall load:reset
+	if $kflow_label = "*end_now" end
+	mov $31, $kflow_label
+*menu_country
+	gosub *reset_menu
+	k_seladd "连续浏览全部", "00"
+	for %21 = 1 to 10
+		itoa_s $21, %21
+		k_seladd "浏览第"+$21+"章", $21
+	next
+	k_seladd "返回上一层", "99"
+	k_select
+	if $kflow_label = "" reset
+	if $kflow_label = "99" reset
+	if $kflow_label = "00" mov $21, "*country_"+$31:gosub $21:reset
+	mov $32, $kflow_label
+*menu_section
+	gosub *reset_menu
+	k_seladd "连续浏览全部", "00"
+	if $32 = "01" mov %22, 9:jumpf
+	if $32 = "02" mov %22, 8:jumpf
+	if $32 = "03" mov %22, 9:jumpf
+	if $32 = "04" mov %22, 6:jumpf
+	if $32 = "05" mov %22, 6:jumpf
+	if $32 = "06" mov %22, 6:jumpf
+	if $32 = "07" mov %22, 7:jumpf
+	if $32 = "08" mov %22, 10:jumpf
+	if $32 = "09" mov %22, 7:jumpf
+	if $32 = "10" mov %22, 7:jumpf
+	~
+	for %21 = 1 to %22
+		itoa_s $21, %21
+		k_seladd "浏览第"+$21+"节", $21
+	next
+	k_seladd "返回上一层", "99"
+	k_select
+	if $kflow_label = "" goto *menu_country
+	if $kflow_label = "99" goto *menu_country
+	if $kflow_label = "00" mov $21, "*chapter_"+$31+$32:gosub $21:goto *menu_country
+	mov $21, "*section_"+$31+$32+$kflow_label:gosub $21:goto *menu_section

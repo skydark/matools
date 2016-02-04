@@ -1,0 +1,40 @@
+
+
+*k_seladd
+	getparam $1001, $1002
+	mov %1001, KSEL_POOL+KSEL_SIZE*%KSEL_COUNT
+	mov $%1001, $1001
+	inc %1001:mov $%1001, $1002
+	inc %KSEL_COUNT
+	return
+
+*k_select
+	savegame 999
+	mov $kflow_label, ""
+	btndef ""
+	mov %1002, KSEL_POOL
+	mov %1003, 0:mov %1004, 100
+	if %KSEL_COUNT > 3 mov %1003, 20:mov %1004, 80
+	if %KSEL_COUNT > 5 mov %1003, 0:mov %1004, 50
+	for %1001=1 to %KSEL_COUNT
+		lsp L_KSEL-%1001*2, ":s/32,32,0;#101010"+$%1002, 200, %1001 * %1004 + %1003
+		lsp L_KSEL-%1001*2+1,":c/2,0,3;>450,36,#C0C0FF#888888", 180, %1001 * %1004 + %1003-2
+		spbtn L_KSEL-%1001*2, %1001
+		spbtn L_KSEL-%1001*2+1, %1001
+		add %1002, KSEL_SIZE
+	next
+*k_select_lp
+	btnwait2 %1002
+	if %1002 = -10 mov %1002, -1
+	if %right_enabled = 0 & %1002 = -1 goto *k_select_lp
+	if %1002 < 1 & %1002 != -1 goto *k_select_lp
+	btndef clear
+	for %1001=1 to %KSEL_COUNT
+		csp L_KSEL-%1001*2
+		csp L_KSEL-%1001*2+1
+	next
+	if %1002 = -1 systemcall rmenu:goto *k_select
+	mov %1002, KSEL_POOL+KSEL_SIZE*(%1002-1)+1
+	mov $kflow_label, $%1002
+	mov %KSEL_COUNT, 0
+	return

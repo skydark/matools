@@ -1,0 +1,38 @@
+*country_1
+	gosub *chapter_101
+	gosub *chapter_102
+	gosub *chapter_103
+	gosub *chapter_104
+	gosub *chapter_105
+	gosub *chapter_106
+	gosub *chapter_107
+	gosub *chapter_108
+	gosub *chapter_109
+	gosub *chapter_110
+	reset
+
+*country_2
+	gosub *chapter_201
+	gosub *chapter_202
+	gosub *chapter_203
+	gosub *chapter_204
+	gosub *chapter_205
+	gosub *chapter_206
+	gosub *chapter_207
+	gosub *chapter_208
+	gosub *chapter_209
+	gosub *chapter_210
+	reset
+
+*country_3
+	gosub *chapter_301
+	gosub *chapter_302
+	gosub *chapter_303
+	gosub *chapter_304
+	gosub *chapter_305
+	gosub *chapter_306
+	gosub *chapter_307
+	gosub *chapter_308
+	gosub *chapter_309
+	gosub *chapter_310
+	reset

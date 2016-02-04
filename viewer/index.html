@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>MA卡牌查看器 - skydark</title>
+<meta charset="utf-8" /> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="css/ma.css" rel="stylesheet" media="screen">
+</head>
+<body>
+<div class="container">
+
+<div class="row section-query">
+  <h2>查询
+  <div class="dropdown pull-right" id="preset-query-dropdown">
+    <button id="preset-query-label" type="button" class="btn btn-info" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">预设查询
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" id="preset-query-menu" aria-labelledby="preset-query-label">
+      <li><a data-toggle="modal" data-target="#preset-add">添加到预设</a></li>
+      <li role=separator class=divider></li>
+    </ul>
+  </div>
+  </h2>
+  <form role="form" id="form-query">
+  <div class="form-group col-sm-4">
+    <label>页码(共<span id="total-page"></span>页)</label>
+    <div class="input-group">
+        <a class="btn btn-default input-group-addon" id="btn-first">«</a>
+        <a class="btn btn-default input-group-addon" id="btn-prev">‹</a>
+        <input type="text" class="form-control number-only" id="pagenum" type="number" placeholder="1">
+        <a class="btn btn-default input-group-addon" id="btn-next">›</a>
+        <a class="btn btn-default input-group-addon" id="btn-last">»</a>
+    </div>
+  </div>
+  <div class="form-group col-sm-2">
+    <label>条数</label>
+    <input type="text" class="form-control number-only" id="pagesize" type="number" placeholder="10">
+  </div>
+  <div class="form-group col-sm-5">
+    <label>query</label>
+    <input type="text" class="form-control" id="query">
+  </div>
+  <div class="form-group col-sm-1">
+    <button type="submit" class="btn btn-primary" id="btn-query">查询</button>
+  </div>
+  </form>
+</div>
+
+<div class="row section-query">
+  <ul id="result-list">
+  </ul>
+</div>
+
+<div class="row section-detail">
+  <h2>卡牌资料<a class="btn btn-primary pull-right" id="btn-hide-detail">返回</a></h2>
+  <table id="table-detail" class="row">
+      <tbody>
+          <tr>
+              <td rowspan="6"><img id="detail-face"></td>
+              <td><strong>名字</strong></td>
+              <td colspan="3" id="detail-name">未知</td>
+          </tr>
+          <tr>
+              <td><strong>星数</strong></td>
+              <td><a id="detail-rarity">0</a></td>
+              <td><strong>性别</strong></td>
+              <td><a id="detail-sex">中性</a></td>
+          </tr>
+          <tr>
+              <td><strong>阵营<strong></td>
+              <td><a id="detail-country">中立</a></td>
+              <td><strong>力量属性</strong></td>
+              <td><a id="detail-attack-type">中立</a></td>
+          </tr>
+          <tr>
+              <td><strong>COST</strong></td>
+              <td><a id="detail-cost">0</a></td>
+              <td><strong>成长</strong></td>
+              <td><span id="detail-grow">平均 ; 成长：大</span></td>
+          </tr>
+          <tr>
+              <td><strong>技能名</strong></td>
+              <td><span id="detail-skill-name">猛虎落地势</span></td>
+              <td><strong>技能名(英文)</strong></td>
+              <td><span id="detail-skill-kana">Sorry and Run</span></td>
+          </tr>
+          <tr>
+              <td><strong>画师</strong></td>
+              <td><a id="detail-illustrator">Vilor</a></td>
+              <td><strong>卡牌版本</strong></td>
+              <td><a id="detail-card-version"></a></td>
+          </tr>
+          <tr>
+              <td><strong>技能效果</strong></td>
+              <td colspan="4" id="detail-skill-desc"></td>
+          </tr>
+          <tr>
+              <td><strong>背景资料</strong></td>
+              <td colspan="4" id="detail-desc">暂无</td>
+          </tr>
+      </tbody>
+  </table>
+  <div>
+
+      <ul class="nav nav-tabs" role="tablist" id="tab-detail">
+          <li role="presetation" class="active"><a href="#detail-image1" role="tab" data-toggle="tab">普卡</a></li>
+          <li role="presetation"><a href="#detail-image2" role="tab" data-toggle="tab">闪卡</a></li>
+          <li role="presetation"><a href="#detail-image3" role="tab" data-toggle="tab">普满</a></li>
+          <li role="presetation"><a href="#detail-image4" role="tab" data-toggle="tab">闪满</a></li>
+      </ul>
+
+      <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="detail-image1"><img alt="暂无"></div>
+          <div role="tabpanel" class="tab-pane" id="detail-image2"><img alt="暂无"></div>
+          <div role="tabpanel" class="tab-pane" id="detail-image3"><img alt="暂无"></div>
+          <div role="tabpanel" class="tab-pane" id="detail-image4"><img alt="暂无"></div>
+      </div>
+
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="preset-add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">添加到预设</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="preset-name" class="control-label">名称:</label>
+            <input type="text" class="form-control" id="preset-name">
+          </div>
+          <div class="form-group">
+            <label for="preset-query" class="control-label">查询:</label>
+            <input type="text" class="form-control" id="preset-query">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" id="preset-submit">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/alasql.min.js"></script>
+<script src="js/madb.js"></script>
+<script src="js/maviewer.js"></script>
+<script src="js/preset.js"></script>
+</body>
+</html>
+

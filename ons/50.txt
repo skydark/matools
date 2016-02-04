@@ -1,0 +1,88 @@
+
+*itoa_s
+	getparam s%11, %12
+	itoa $%11, %12 
+	if %12 < 10 mov $%11, "0"+$%11
+	return
+
+*begin_scene
+	getparam %11
+*clear_scene
+	csp L_BG
+	for %12=1 to 7
+		mov %13, L_CHAR_BASE - %12 * 2
+		csp %13:csp %13-1
+	next
+	textoff_
+	print 1
+	return
+
+*title
+	getparam $11, $12
+	name $11
+	$12
+	\
+	return
+
+*name
+	getparam $11
+	lsp L_TEXT_NAME, ":s/28,28,0;#FFFFFF#80C0FF"+$11, 20, 400
+	vsp L_TEXT_NAME, 1
+	texton_
+	return
+
+*bg_
+	getparam $11
+	if $11 = "black" lsp L_BG, ":c;>960,640,#000000", 0, 0, 255:return
+	lsp L_BG, ":c;bgimage\"+$11+".png", 0, 0, 255
+	return
+
+*texton_
+	vsp L_TEXT_BG, 1:print 1
+	texton
+	return
+
+*textoff_
+	vsp L_TEXT_NAME, 0
+	vsp L_TEXT_BG, 0:print 1
+	textoff
+	return
+
+*trans
+	getparam %5
+	print 10, 1000
+	return
+
+*char
+	getparam %11, $12, $13
+	mov %12, L_CHAR_BASE - %11 * 2
+	csp %12:csp %12-1
+	mov %14, 320 * (%11-4) / 3
+	mov %15, 0
+	if $12 = "" csp %12:skip 2
+	lsp %12,"chara\adv_chara"+$12+".png",%14,%15
+	if $13 = "" csp %12-1:skip 2
+	lsp %12-1,"chara\adv_chara"+$13+".png",%14,%15
+	return
+
+*char_on
+	getparam %11, %12
+	mov %13, L_CHAR_BASE - %11 * 2
+	csp %13:csp %13-1
+	print 10, %12 * 100 / 3
+	return
+
+*voice
+	getparam $11
+	dwave 2, "voice\" + $11 + ".ogg"
+	return
+
+*se
+	getparam $11
+	dwave 1, "se\"+$11 + ".ogg"
+	return
+
+*wa
+	getparam %11
+	delay %11 * 100 / 3
+	return
