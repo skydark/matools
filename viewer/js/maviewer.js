@@ -146,11 +146,11 @@ var show_detail = function(id) {
     ];
     $('.detail-image').each(function(i, elm) {
       var postfix = postfixes[i];
-      $(this).attr('src', 'image/full_cards/full_thumbnail_chara_' + postfix)
-             .on('error', function(){
-               $(this).on('error', function(){});
-               $(this).attr('src', 'image/card/thumbnail_chara_' + postfix);
-             });
+      this.src = 'image/full_cards/full_thumbnail_chara_' + postfix;
+      this.onerror = function() {
+        this.onerror = null;
+        this.src = 'image/card/thumbnail_chara_' + postfix;
+      };
     });
     $(".section-query").hide();
     $(".section-detail").show();
