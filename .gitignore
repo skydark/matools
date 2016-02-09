@@ -1,2 +1,4 @@
 save
 backup
+viewer/image/*
+viewer/js/madb.js
