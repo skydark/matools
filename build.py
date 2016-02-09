@@ -13,6 +13,10 @@ def build_viewer_face(root_dir, out_dir):
     copyfiles(os.path.join(root_dir, 'download', 'image', 'face'), out_dir,
             decrypt=decrypt, tranformer=lambda n: n+'.png')
 
+def build_viewer_card(root_dir, out_dir):
+    copyfiles(os.path.join(root_dir, 'download', 'image', 'card'), out_dir,
+            decrypt=decrypt, tranformer=lambda n: n+'.png')
+
 
 def build_viewer_data(root_dir, path, var_name):
     cardlist = MACardList(root_dir)
@@ -77,4 +81,5 @@ if __name__ == '__main__':
     root_dir = 'save'
     build_viewer_data(root_dir, 'viewer/js/madb.js', 'MA_DB')
     build_viewer_face(root_dir, 'viewer/image/face')
+    build_viewer_card(root_dir, 'viewer/image/card')
     build_ons_data(root_dir, 'ons')

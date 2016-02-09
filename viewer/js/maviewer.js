@@ -138,10 +138,20 @@ var show_detail = function(id) {
         do_query('where card_version='+details.card_version);
     });
     $('#detail-desc').text(details.char_description);
-    $('#detail-image1 img').attr('src', 'image/full_cards/full_thumbnail_chara_'+details.image1_id+'.png');
-    $('#detail-image2 img').attr('src', 'image/full_cards/full_thumbnail_chara_'+details.image1_id+'_horo.png');
-    $('#detail-image3 img').attr('src', 'image/full_cards/full_thumbnail_chara_'+details.image2_id+'.png');
-    $('#detail-image4 img').attr('src', 'image/full_cards/full_thumbnail_chara_'+details.image2_id+'_horo.png');
+    var postfixes = [
+      details.image1_id+'.png',
+      details.image1_id+'_horo.png',
+      details.image2_id+'.png',
+      details.image2_id+'_horo.png'
+    ];
+    $('.detail-image').each(function(i, elm) {
+      var postfix = postfixes[i];
+      $(this).attr('src', 'image/full_cards/full_thumbnail_chara_' + postfix)
+             .on('error', function(){
+               $(this).on('error', function(){});
+               $(this).attr('src', 'image/card/thumbnail_chara_' + postfix);
+             });
+    });
     $(".section-query").hide();
     $(".section-detail").show();
 };
