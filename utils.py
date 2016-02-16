@@ -38,7 +38,7 @@ def copytree(src, dst, overwrite=False, decrypt=_id):
         srcname = os.path.join(src, name)
         dstname = os.path.join(dst, name)
         if os.path.isdir(srcname):
-            copytree(srcname, dstname)
+            copytree(srcname, dstname, overwrite=overwrite, decrypt=decrypt)
         else:
             copyfile(srcname, dstname, overwrite=overwrite, decrypt=decrypt)
 
